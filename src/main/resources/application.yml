@@ -1,0 +1,20 @@
+server:
+  port: 80
+#management:
+#  endpoint:
+#    shutdown:
+#      enabled: true
+#  endpoints:
+#    web:
+#      exposure:
+#        include: *
+
+spring:
+#  output:
+#    ansi:
+#      enabled: ALWAYS
+  datasource:
+    url: jdbc:mysql://172.26.1.1:3306/iras
+    username: root
+    password: hwPPwKnBTNScpRFt
+    driver-class-name: com.mysql.cj.jdbc.Driver
