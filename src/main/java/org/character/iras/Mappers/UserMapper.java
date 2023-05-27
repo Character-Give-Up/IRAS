@@ -3,13 +3,9 @@ package org.character.iras.Mappers;
 import org.character.iras.Entity.User;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.lang.reflect.Field;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 public class UserMapper implements RowMapper<User> {
     /**

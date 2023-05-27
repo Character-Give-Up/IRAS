@@ -2,7 +2,6 @@ package org.character.iras.Service;
 
 import jakarta.annotation.Nullable;
 import org.character.iras.Application;
-import org.character.iras.DataAccess.MySQLImplments.MySQLResumeDataAccess;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

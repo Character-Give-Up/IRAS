@@ -1,8 +1,5 @@
 package org.character.iras;
 
-import org.character.iras.DataAccess.MySQLImplments.MySQLTokenDataAccess;
-import org.character.iras.DataAccess.MySQLImplments.MySQLUserDataAccess;
-import org.character.iras.Entity.Token;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -11,7 +8,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 @SpringBootApplication
 public class Application {

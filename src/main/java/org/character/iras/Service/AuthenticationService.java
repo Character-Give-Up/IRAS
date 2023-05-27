@@ -4,7 +4,6 @@ import org.character.iras.Application;
 import org.character.iras.DataAccess.MySQLImplments.MySQLUserDataAccess;
 import org.character.iras.Entity.User;
 import org.character.iras.Exceptions.UserNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

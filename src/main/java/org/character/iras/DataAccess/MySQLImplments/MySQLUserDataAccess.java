@@ -7,7 +7,6 @@ import org.character.iras.Mappers.UserMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 public class MySQLUserDataAccess implements UserDataAccess {

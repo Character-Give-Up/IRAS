@@ -3,7 +3,6 @@ package org.character.iras.Controller;
 import com.alibaba.fastjson.JSONObject;
 import org.character.iras.Application;
 import org.character.iras.DataAccess.MySQLImplments.MySQLResumeDataAccess;
-import org.character.iras.Service.DatabaseUploader;
 import org.character.iras.Service.UploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 
 @RestController

@@ -4,7 +4,6 @@ import jakarta.annotation.Nullable;
 import org.character.iras.Entity.User;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 public interface UserDataAccess extends DataAccess{
 
