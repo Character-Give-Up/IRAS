@@ -3,24 +3,33 @@ package org.character.iras.Controller;
 import com.alibaba.fastjson.JSONObject;
 import org.character.iras.Exceptions.UserNotFoundException;
 import org.character.iras.Service.AuthenticationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuthenticationController {
+
+    private AuthenticationService authenticationService;
+
+
+    @Autowired
+    public void setAuthenticationService(AuthenticationService service){
+        this.authenticationService = service;
+    }
+
     /**
      * 处理登录请求
      * @param username 用户名
      * @param password 密码
      * @return 登陆结果
      */
-
     @PostMapping("/login")
     public JSONObject login(@RequestParam("username") String username,
                             @RequestParam("password") String password){
-        // 创建验证服务，传入待验证的用户名和密码
-        AuthenticationService authenticationService = new AuthenticationService(username, password);
+        authenticationService.setUsername(username);
+        authenticationService.setPassword(password);
         // 准备返回结果，初始化JSON对象
         JSONObject result = new JSONObject();
         // 准备验证结果

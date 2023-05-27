@@ -1,5 +1,6 @@
 package org.character.iras.Entity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,14 @@ public class Resume {
     private String WorkingSeniority; // 工作年限
     private String originalContent;
 
-    public Resume(String path) {
+    /**
+     * 创建简历实体
+     * @param path 文件路径
+     * @throws IOException 遇到I/O问题
+     */
+    public Resume(String path) throws IOException {
         this.path = path;
+        setOriginalContent(new PDFResolver(path).resolve());
     }
 
     /**
@@ -28,6 +35,8 @@ public class Resume {
     public String getPath() {
         return path;
     }
+
+
 
     /**
      * 获取简历信息的关键字

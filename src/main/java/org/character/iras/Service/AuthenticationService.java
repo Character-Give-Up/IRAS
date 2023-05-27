@@ -4,13 +4,29 @@ import org.character.iras.Application;
 import org.character.iras.DataAccess.MySQLImplments.MySQLUserDataAccess;
 import org.character.iras.Entity.User;
 import org.character.iras.Exceptions.UserNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AuthenticationService {
     protected String username;
     protected String password;
 
+
+    public AuthenticationService() {
+    }
+
+
     public AuthenticationService(String username, String password) {
         this.username = username;
+        this.password = password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
     }
 
