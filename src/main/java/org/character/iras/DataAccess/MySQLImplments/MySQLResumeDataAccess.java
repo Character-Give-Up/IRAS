@@ -2,16 +2,18 @@ package org.character.iras.DataAccess.MySQLImplments;
 
 import org.character.iras.DataAccess.Interfaces.ResumeDataAccess;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Repository
 public class MySQLResumeDataAccess implements ResumeDataAccess {
     @Override
-    public void putNewResumeData(int id, String path) {
+    public void putNewResumeData(int id, String url) {
         JdbcTemplate template = getJdbcTemplate();
-        template.update("INSERT into resume(id, path) VALUES(?, '?')", id, path);
+        template.update("INSERT into resume(id, url) VALUES(?, ?)", id, url);
     }
 
     @Override
@@ -29,7 +31,13 @@ public class MySQLResumeDataAccess implements ResumeDataAccess {
     @Override
     public int getMaximumId() {
         List<Integer> ids = getIds();
+        if(ids.size() == 0) return 0;
         ids.sort((o1, o2) -> o2-o1);
         return ids.get(0);
+    }
+
+    @Override
+    public String getURL() {
+        return null;
     }
 }

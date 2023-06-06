@@ -10,11 +10,16 @@ server:
 #        include: *
 
 spring:
-#  output:
-#    ansi:
-#      enabled: ALWAYS
+  output:
+    ansi:
+      enabled: ALWAYS
   datasource:
-    url: jdbc:mysql://172.26.1.1:3306/iras
+    url: jdbc:mysql://192.168.75.138:3306/iras
     username: root
     password: hwPPwKnBTNScpRFt
     driver-class-name: com.mysql.cj.jdbc.Driver
+minio:
+  url: "http://192.168.75.138:9000/"
+  accessKey: "7o36m6uVHGiNRgwSeECV"  # 7o36m6uVHGiNRgwSeECV
+  secretKey: "JU51uOLvnCrosDBYtOQhWvpTJgxfZijBttcLM9jq"  # JU51uOLvnCrosDBYtOQhWvpTJgxfZijBttcLM9jq
+  bucket: "test"

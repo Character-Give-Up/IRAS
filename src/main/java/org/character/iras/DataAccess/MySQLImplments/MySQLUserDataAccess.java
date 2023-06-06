@@ -6,9 +6,12 @@ import org.character.iras.Entity.User;
 import org.character.iras.Mappers.UserMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
+@Repository
 public class MySQLUserDataAccess implements UserDataAccess {
     @Override
     @Nullable
@@ -35,7 +38,7 @@ public class MySQLUserDataAccess implements UserDataAccess {
 
     @Nullable
     @Override
-    public User geiUserByResumeId(int resumeId) {
+    public User getUserByResumeId(int resumeId) {
         JdbcTemplate template = getJdbcTemplate();
         try {
             return template.queryForObject("select * from user where resume_id=?", new UserMapper(), resumeId);
@@ -53,5 +56,27 @@ public class MySQLUserDataAccess implements UserDataAccess {
         }catch (EmptyResultDataAccessException e){
             return null;
         }
+    }
+
+    /**
+     * 更改某一个用户的最后登录时间
+     * @param username 用户名
+     * @param date 最后登录时间
+     */
+    @Override
+    public void setUserLastLoginTime(String username, Date date){
+        JdbcTemplate template = getJdbcTemplate();
+        template.update("UPDATE `user` SET last_login=? where username=?", date, username);
+    }
+
+    /**
+     * 更改某一个用户的最后使用token
+     * @param username 用户名
+     * @param token 最后使用token
+     */
+    @Override
+    public void setUserLastToken(String username, String token){
+        JdbcTemplate template = getJdbcTemplate();
+        template.update("UPDATE `user` SET last_token=? where username=?", token, username);
     }
 }

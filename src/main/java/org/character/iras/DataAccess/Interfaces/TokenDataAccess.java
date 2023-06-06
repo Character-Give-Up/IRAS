@@ -13,4 +13,6 @@ public interface TokenDataAccess extends DataAccess{
     @Nullable
     Token getTokenByValue(String value);
 
+    void addToken(String value);
+
 }

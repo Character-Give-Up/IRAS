@@ -33,6 +33,10 @@ public class Token {
         return new SimpleDateFormat(pattern).format(expiredTime);
     }
 
+    public Date getExpiredDate(){
+        return this.expiredTime;
+    }
+
     public void setExpiredTime(Date expiredTime) {
         this.expiredTime = expiredTime;
     }
