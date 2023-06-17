@@ -37,7 +37,7 @@ public class MySQLResumeDataAccess implements ResumeDataAccess {
     }
 
     @Override
-    public String getURL() {
+    public String getURL(int id) {
         return null;
     }
 }

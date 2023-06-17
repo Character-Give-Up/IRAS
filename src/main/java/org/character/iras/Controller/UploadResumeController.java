@@ -2,8 +2,6 @@ package org.character.iras.Controller;
 
 import com.alibaba.fastjson.JSONObject;
 import io.minio.errors.*;
-import org.character.iras.Application;
-import org.character.iras.DataAccess.MySQLImplments.MySQLResumeDataAccess;
 import org.character.iras.Service.UploadFileService;
 import org.character.iras.Utils.TimeStampGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,20 +14,37 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * 上传简历文件的控制器
+ */
 @RestController
 public class UploadResumeController {
 
+    /**
+     * 文件上传服务层实例
+     */
     private UploadFileService uploadFileService;
 
+    /**
+     * 时间戳生成器
+     */
     private TimeStampGenerator timeStampGenerator;
 
+    /**
+     * 自动注入文件上传服务实例
+     * @param service
+     */
     @Autowired
-    public void setUploadFileService(UploadFileService service){
+    private void setUploadFileService(UploadFileService service){
         this.uploadFileService = service;
     }
 
+    /**
+     * 自动注入时间戳生成器实例
+     * @param generator 时间戳生成器
+     */
     @Autowired
-    public void setTimeStampGenerator(TimeStampGenerator generator){
+    private void setTimeStampGenerator(TimeStampGenerator generator){
         this.timeStampGenerator = generator;
     }
 
@@ -39,12 +54,10 @@ public class UploadResumeController {
      * @param file 文件
      * @return 上传结果信息键值对
      */
-
-
     @PostMapping("/upload")
     public JSONObject upload(@RequestParam("username") String username,
-                             @RequestParam("file")MultipartFile file){
-        // TODO 实现文件上传
+                             @RequestParam("file") MultipartFile file){
+
         JSONObject result = new JSONObject();
         try {
             String currentTimeString = timeStampGenerator.getCurrentTimeString("yyyyMMddHHmmssSSS");
