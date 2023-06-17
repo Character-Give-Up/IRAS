@@ -1,6 +1,8 @@
 package org.character.iras.DataAccess.MySQLImplments;
 
 import org.character.iras.DataAccess.Interfaces.ResumeDataAccess;
+import org.character.iras.Entity.Resume;
+import org.character.iras.Mappers.ResumeMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -39,5 +41,10 @@ public class MySQLResumeDataAccess implements ResumeDataAccess {
     @Override
     public String getURL(int id) {
         return null;
+    }
+
+    @Override
+    public List<Resume> getResumes(){
+        return this.getJdbcTemplate().query("SELECT * FROM resume", new ResumeMapper());
     }
 }

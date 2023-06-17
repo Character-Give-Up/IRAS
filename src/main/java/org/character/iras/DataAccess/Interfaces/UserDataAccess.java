@@ -60,4 +60,6 @@ public interface UserDataAccess extends DataAccess{
      * @param token 令牌
      */
     void setUserLastToken(String username, String token);
+
+    List<User> getUsers();
 }

@@ -1,5 +1,7 @@
 package org.character.iras.DataAccess.Interfaces;
 
+import org.character.iras.Entity.Resume;
+
 import java.util.List;
 
 /**
@@ -28,5 +30,7 @@ public interface ResumeDataAccess extends DataAccess{
      * @return 指定ID简历的URL地址
      */
     String getURL(int id);
+
+    List<Resume> getResumes();
 }
 

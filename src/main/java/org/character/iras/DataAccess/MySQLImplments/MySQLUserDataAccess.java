@@ -79,4 +79,10 @@ public class MySQLUserDataAccess implements UserDataAccess {
         JdbcTemplate template = getJdbcTemplate();
         template.update("UPDATE `user` SET last_token=? where username=?", token, username);
     }
+
+    @Override
+    public List<User> getUsers(){
+        JdbcTemplate template = getJdbcTemplate();
+        return template.query("SELECT * FROM user", new UserMapper());
+    }
 }

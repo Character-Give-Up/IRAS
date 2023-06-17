@@ -8,6 +8,8 @@ import java.util.List;
  * 简历实体
  */
 public class Resume {
+
+    private int id;
     /**
      * 简历文件路径
      */
@@ -49,6 +51,15 @@ public class Resume {
     public Resume(String path) throws IOException {
         this.path = path;
         setOriginalContent(new PDFResolver(path).resolve());
+    }
+
+    public Resume(int id, String path) {
+        this.id = id;
+        this.path = path;
+    }
+
+    public int getId() {
+        return id;
     }
 
     /**
