@@ -1,15 +1,20 @@
 package org.character.iras.Controller;
 
 import com.alibaba.fastjson.JSONObject;
+import io.minio.errors.InternalException;
+import io.minio.errors.InvalidResponseException;
+import io.minio.errors.*;
 import org.character.iras.Service.UploadFileService;
 import org.character.iras.Utils.TimeStampGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.rmi.ServerException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -71,10 +76,6 @@ public class UploadResumeController {
             result.put("code", 0);
             result.put("message", "服务器I/O异常：" + e.getMessage());
             return result;
-        } catch (ServerException e) {
-            result.put("code", 0);
-            result.put("message", "MiniO服务器异常：" + e.getMessage());
-            return result;
         } catch (InsufficientDataException e) {
             result.put("code", 0);
             result.put("message", "MiniO不充足的数据：" + e.getMessage());
@@ -99,7 +100,7 @@ public class UploadResumeController {
             result.put("code", 0);
             result.put("message", "MiniO-XmlParserException：" + e.getMessage());
             return result;
-        } catch (InternalException e) {
+        } catch (InternalException | io.minio.errors.ErrorResponseException | io.minio.errors.ServerException e) {
             result.put("code", 0);
             result.put("message", "MiniO服务器内部错误：" + e.getMessage());
             return result;
