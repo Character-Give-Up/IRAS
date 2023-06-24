@@ -1,10 +1,8 @@
 package org.character.iras.Service;
 
-import com.alibaba.fastjson.JSONObject;
 import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
 import io.minio.UploadObjectArgs;
-import io.minio.errors.*;
 import io.minio.http.Method;
 import org.character.iras.DataAccess.Interfaces.ResumeDataAccess;
 import org.character.iras.DataAccess.MySQLImplments.MySQLResumeDataAccess;
@@ -17,8 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class UploadFileService {

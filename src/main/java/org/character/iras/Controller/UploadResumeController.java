@@ -1,7 +1,6 @@
 package org.character.iras.Controller;
 
 import com.alibaba.fastjson.JSONObject;
-import io.minio.errors.*;
 import org.character.iras.Service.UploadFileService;
 import org.character.iras.Utils.TimeStampGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
