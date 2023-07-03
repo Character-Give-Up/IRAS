@@ -3,9 +3,9 @@ package org.character.iras.Mappers;
 import org.character.iras.Entity.Token;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class TokenMappers implements RowMapper<Token> {
     /**

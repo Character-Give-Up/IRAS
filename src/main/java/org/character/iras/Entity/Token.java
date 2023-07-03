@@ -1,6 +1,5 @@
 package org.character.iras.Entity;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,6 +31,10 @@ public class Token {
 
     public String getExpiredDate(String pattern){
         return new SimpleDateFormat(pattern).format(expiredTime);
+    }
+
+    public Date getExpiredDate(){
+        return this.expiredTime;
     }
 
     public void setExpiredTime(Date expiredTime) {

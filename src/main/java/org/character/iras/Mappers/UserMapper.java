@@ -3,13 +3,9 @@ package org.character.iras.Mappers;
 import org.character.iras.Entity.User;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.lang.reflect.Field;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 public class UserMapper implements RowMapper<User> {
     /**
@@ -30,8 +26,9 @@ public class UserMapper implements RowMapper<User> {
         String email = rs.getString("email");
         Date lastLogin = rs.getDate("last_login");
         String lastToken = rs.getString("last_token");
+        int privileged = rs.getInt("privileged");
         int resumeId = rs.getInt("resume_id");
         if(resumeId == 0) resumeId = -1;
-        return new User(username, password, email, lastLogin, lastToken, resumeId);
+        return new User(username, password, email, lastLogin, lastToken, resumeId, privileged == 1);
     }
 }

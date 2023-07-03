@@ -19,6 +19,7 @@ public class User {
     @Nullable
     private Resume resume;
     private int resumeId = -1;
+    private boolean privileged;
 
     /**
      * 创建用户实体
@@ -47,13 +48,15 @@ public class User {
                 @Nullable String email,
                 @Nullable Date lastLogin,
                 @Nullable String lastToken,
-                int resumeId) {
+                int resumeId,
+                boolean privileged) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.lastLogin = lastLogin;
         this.lastToken = lastToken;
         this.resumeId = resumeId;
+        this.privileged = privileged;
     }
 
     /**

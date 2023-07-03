@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 
 import java.util.Map;
 
+/**
+ * 云端API接口。所有需要同url调用的服务的驱动类<b>均需实现此接口</b>。
+ */
 public interface CloudAPI {
     /**
      * 设置请求路径的前缀
