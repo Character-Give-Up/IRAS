@@ -64,12 +64,19 @@ public class UploadResumeController {
 
         JSONObject result = new JSONObject();
         try {
+            // 准备当前时间字符串，作为存入MINIO数据库的文件名
             String currentTimeString = timeStampGenerator.getCurrentTimeString("yyyyMMddHHmmssSSS");
+            // 调用MINIO前期准备：设置上传文件名
             uploadFileService.setFilename(currentTimeString + "_" + file.getOriginalFilename());
+            // 将文件实体进行设置
             uploadFileService.putFile(file);
+            // 设置是谁上传的此简历文件
             uploadFileService.setUsername(username);
+            // 前期准备工作已经完毕，直接上传文件
             String url = uploadFileService.upload();
+            // 执行到此步说明上传已完成并成功，设置状态码为1，表示上传成功
             result.put("code", 1);
+            // 成功后也要返回上传成功的字符串、
             result.put("url", url);
             return result;
         } catch (IOException e) {

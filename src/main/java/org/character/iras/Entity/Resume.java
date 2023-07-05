@@ -13,7 +13,7 @@ public class Resume {
     /**
      * 简历文件路径
      */
-    private final String path; // 简历文件路径
+    private String path; // 简历文件路径
     /**
      * 简历关键字
      */
@@ -56,6 +56,10 @@ public class Resume {
     public Resume(int id, String path) {
         this.id = id;
         this.path = path;
+    }
+
+    public Resume() {
+
     }
 
     public int getId() {
