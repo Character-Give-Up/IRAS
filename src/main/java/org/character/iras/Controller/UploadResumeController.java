@@ -80,6 +80,7 @@ public class UploadResumeController {
             result.put("url", url);
             return result;
         } catch (IOException e) {
+            // 捕获异常
             result.put("code", 0);
             result.put("message", "服务器I/O异常：" + e.getMessage());
             return result;
