@@ -3,6 +3,9 @@ package org.character.iras.CloudAIAccess;
 import com.alibaba.fastjson.JSONObject;
 import org.character.iras.Entity.Resume;
 
+/**
+ * 简历分析器。通过实现此接口中的所有方法，完成简历分析功能。
+ */
 public interface ResumeAnalyzer {
     /**
      * 传递简历

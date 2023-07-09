@@ -1,6 +1,5 @@
 package org.character.iras.Service;
 
-import com.alibaba.fastjson.JSONObject;
 import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
 import io.minio.UploadObjectArgs;
@@ -15,10 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.rmi.ServerException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class UploadFileService {
@@ -73,14 +71,13 @@ public class UploadFileService {
 
     public String upload() throws
             IOException,
-            ServerException,
             InsufficientDataException,
             ErrorResponseException,
             NoSuchAlgorithmException,
             InvalidKeyException,
             InvalidResponseException,
             XmlParserException,
-            InternalException {
+            InternalException, io.minio.errors.ServerException {
         MinioClient client = MinioClient.builder().endpoint(this.minio).credentials(accessKey, secretKey).build();
         client.uploadObject(UploadObjectArgs.builder()
                         .filename(file.getAbsolutePath())

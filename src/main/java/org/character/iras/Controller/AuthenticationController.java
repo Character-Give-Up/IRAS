@@ -15,34 +15,64 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Calendar;
 
+/**
+ * 用户账户验证控制器
+ */
 @RestController
 public class AuthenticationController {
-
+    /**
+     * 验证服务实例
+     */
     private AuthenticationService authenticationService;
+    /**
+     * 随机令牌生成器实例
+     */
     private TokenGenerator tokenGenerator;
+    /**
+     * 令牌数据连接层实例
+     */
     private TokenDataAccess tokenDataAccess;
+    /**
+     * 用户数据连接层实例
+     */
     private UserDataAccess userDataAccess;
 
-
+    /**
+     * 自动注入用户账户验证服务实例
+     * @param service 用户账户验证服务实例
+     */
     @Autowired
     public void setAuthenticationService(AuthenticationService service){
         this.authenticationService = service;
     }
 
+    /**
+     * 自动注入随机令牌生成器实例
+     * @param generator 随机令牌生成器实例
+     */
     @Autowired
     public void setTokenGenerator(TokenGenerator generator){
         this.tokenGenerator = generator;
     }
 
+    /**
+     * 自动注入令牌数据连接层实例
+     * @param access 令牌数据连接层实例
+     */
     @Autowired
     public void setTokenDataAccess(MySQLTokenDataAccess access){
         this.tokenDataAccess = access;
     }
 
+    /**
+     * 自动注入用户数据连接层实例
+     * @param access 用户数据连接层实例
+     */
     @Autowired
     public void setUserDataAccess(MySQLUserDataAccess access){
         this.userDataAccess = access;
@@ -102,4 +132,34 @@ public class AuthenticationController {
         return result;
 
     }
+
+    @PostMapping("/register")
+    public JSONObject register(@RequestBody JSONObject info,
+                               HttpServletResponse response){
+        JSONObject result = new JSONObject();
+        if(login(info, response).getInteger("code") == -1){
+            String username = info.getString("username");
+            String password = info.getString("password");
+            String email = info.getString("email");
+            userDataAccess.addUser(username, password, email);
+            result.put("code", 1);
+            result.put("message", "注册成功");
+        }else{
+            result.put("code", -1);
+            result.put("message", "用户" + info.getString("username") + "已存在");
+        }
+        return result;
+    }
+
+//    @PostMapping("/register")
+//    public JSONObject register(@RequestParam String username,
+//                               @RequestParam String password,
+//                               @RequestParam String email,
+//                               HttpServletResponse response){
+//        JSONObject info = new JSONObject();
+//        info.put("username", username);
+//        info.put("password", password);
+//        info.put("email", email);
+//        return register(info, response);
+//    }
 }

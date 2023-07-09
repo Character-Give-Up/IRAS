@@ -8,14 +8,39 @@ import java.util.List;
  * 简历实体
  */
 public class Resume {
-    private final String path; // 简历文件路径
 
+    private int id;
+    /**
+     * 简历文件路径
+     */
+    private String path; // 简历文件路径
+    /**
+     * 简历关键字
+     */
     private final List<String> keyword = new ArrayList<>(); // 简历关键字
+    /**
+     * 姓名
+     */
     private String name; // 姓名
+    /**
+     * 年龄
+     */
     private int age; // 年龄
+    /**
+     * 最高学历
+     */
     private String HighestDegree; // 最高学历
+    /**
+     * 毕业院校
+     */
     private String GraduateSchool; // 毕业院校
+    /**
+     * 工作年限
+     */
     private String WorkingSeniority; // 工作年限
+    /**
+     * 原始内容
+     */
     private String originalContent;
 
     /**
@@ -26,6 +51,19 @@ public class Resume {
     public Resume(String path) throws IOException {
         this.path = path;
         setOriginalContent(new PDFResolver(path).resolve());
+    }
+
+    public Resume(int id, String path) {
+        this.id = id;
+        this.path = path;
+    }
+
+    public Resume() {
+
+    }
+
+    public int getId() {
+        return id;
     }
 
     /**

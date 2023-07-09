@@ -26,8 +26,9 @@ public class UserMapper implements RowMapper<User> {
         String email = rs.getString("email");
         Date lastLogin = rs.getDate("last_login");
         String lastToken = rs.getString("last_token");
+        int privileged = rs.getInt("privileged");
         int resumeId = rs.getInt("resume_id");
         if(resumeId == 0) resumeId = -1;
-        return new User(username, password, email, lastLogin, lastToken, resumeId);
+        return new User(username, password, email, lastLogin, lastToken, resumeId, privileged == 1);
     }
 }
