@@ -9,9 +9,6 @@ import java.io.IOException;
 @Component
 public class CorsFilter implements Filter {
 
-    @Override
-    public void init(FilterConfig filterConfig) {
-    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
@@ -24,8 +21,4 @@ public class CorsFilter implements Filter {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    @Override
-    public void destroy() {
-        Filter.super.destroy();
-    }
 }

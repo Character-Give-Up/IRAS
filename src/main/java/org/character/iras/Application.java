@@ -16,9 +16,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.http.HttpMethod;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.ResourceUtils;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import java.io.File;
 import java.util.Map;
@@ -100,3 +105,18 @@ public class Application {
 
 
 }
+
+//class WebGlobalConfig{
+//
+//    @Bean
+//    public CorsFilter corsFilter(){
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.addAllowedHeader("*");
+//        config.addAllowedOrigin("*");
+//        config.addAllowedMethod(HttpMethod.GET);
+//        config.addAllowedMethod(HttpMethod.POST);
+//        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+//        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", config);
+//        return new CorsFilter(urlBasedCorsConfigurationSource);
+//    }
+//}

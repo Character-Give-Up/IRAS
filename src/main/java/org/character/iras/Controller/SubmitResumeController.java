@@ -2,9 +2,14 @@ package org.character.iras.Controller;
 
 import com.alibaba.fastjson.JSONObject;
 import org.character.iras.Entity.Resume;
+import org.character.iras.Service.EditResumeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 手动录入简历控制器
@@ -12,13 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SubmitResumeController {
 
+    private EditResumeService editResumeService;
+
+    @Autowired
+    private void setEditResumeService(EditResumeService service){
+        this.editResumeService = service;
+    }
+
 
     /**
      * 手动录入简历信息
      * @param info POST请求体，包含各个字段（见代码注释）
      * @return 手动录入结果JSON消息
      */
-    @PostMapping("/submit")
+    @PostMapping(value = "/submit")
     public JSONObject submit(@RequestBody JSONObject info){
 
         // TODO 实现过程
@@ -37,6 +49,15 @@ public class SubmitResumeController {
         resume.setWorkingSeniority(workingSeniority); // 设置简历所有者的工作年限
         resume.setOriginalContent(null); // 手动录入，无原始内容，因此设置为null
 
-        return null;
+        editResumeService.addNewResumeData(username, resume);
+
+        JSONObject result = new JSONObject();
+        result.put("code", 1);
+        result.put("message", "成功");
+
+        return result;
     }
+
+
+
 }

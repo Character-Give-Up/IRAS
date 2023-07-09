@@ -85,4 +85,17 @@ public class MySQLUserDataAccess implements UserDataAccess {
         JdbcTemplate template = getJdbcTemplate();
         return template.query("SELECT * FROM user", new UserMapper());
     }
+
+    @Override
+    public void setUserResumeId(String username, int id){
+        JdbcTemplate template = getJdbcTemplate();
+        template.update("UPDATE `user` SET resume_id=? where username=?", id, username);
+    }
+
+    @Override
+    public void addUser(String username, String password, String email){
+        JdbcTemplate template = getJdbcTemplate();
+        template.update("insert into user (username, password, email) values (?, ?, ?);",
+                username, password, email);
+    }
 }

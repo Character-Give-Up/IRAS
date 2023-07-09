@@ -14,6 +14,10 @@ public interface ResumeDataAccess extends DataAccess{
      * @param path 简历路径
      */
     void putNewResumeData(int id, String path);
+
+
+    void putNewResumeData(int id, Resume resume);
+
     /**
      * 获取所有的简历的ID
      * @return 由所有简历ID组成的列表

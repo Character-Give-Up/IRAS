@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Calendar;
@@ -131,4 +132,34 @@ public class AuthenticationController {
         return result;
 
     }
+
+    @PostMapping("/register")
+    public JSONObject register(@RequestBody JSONObject info,
+                               HttpServletResponse response){
+        JSONObject result = new JSONObject();
+        if(login(info, response).getInteger("code") == -1){
+            String username = info.getString("username");
+            String password = info.getString("password");
+            String email = info.getString("email");
+            userDataAccess.addUser(username, password, email);
+            result.put("code", 1);
+            result.put("message", "注册成功");
+        }else{
+            result.put("code", -1);
+            result.put("message", "用户" + info.getString("username") + "已存在");
+        }
+        return result;
+    }
+
+//    @PostMapping("/register")
+//    public JSONObject register(@RequestParam String username,
+//                               @RequestParam String password,
+//                               @RequestParam String email,
+//                               HttpServletResponse response){
+//        JSONObject info = new JSONObject();
+//        info.put("username", username);
+//        info.put("password", password);
+//        info.put("email", email);
+//        return register(info, response);
+//    }
 }

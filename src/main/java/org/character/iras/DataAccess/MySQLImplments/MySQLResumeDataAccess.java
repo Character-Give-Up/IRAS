@@ -19,6 +19,16 @@ public class MySQLResumeDataAccess implements ResumeDataAccess {
     }
 
     @Override
+    public void putNewResumeData(int id, Resume resume){
+        JdbcTemplate template = getJdbcTemplate();
+        template.update("INSERT INTO resume(id, `name`, age, HighestDegree, GraduateSchool, WorkingSeniority)" +
+                " VALUES(?, ?, ?, ?, ?, ?)",
+                id, resume.getName(), resume.getAge(),
+                resume.getHighestDegree(),
+                resume.getGraduateSchool(),
+                resume.getWorkingSeniority());
+    }
+    @Override
     public List<Integer> getIds() {
         JdbcTemplate template = getJdbcTemplate();
         List<Map<String, Object>> maps = template.queryForList("SELECT id FROM resume");
