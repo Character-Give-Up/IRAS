@@ -17,4 +17,8 @@ public class PostService {
     public void addPost(String name){
         postDataAccess.addPost(name);
     }
+
+    public void removePost(String name){
+        postDataAccess.removePost(name);
+    }
 }

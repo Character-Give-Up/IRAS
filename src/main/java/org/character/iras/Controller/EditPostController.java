@@ -29,4 +29,14 @@ public class EditPostController {
         result.put("message", "成功");
         return result;
     }
+
+    @PostMapping("/removePost")
+    public JSONObject removePost(@RequestBody JSONObject info){
+        String postName = info.getString("postName");
+        postService.removePost(postName);
+        JSONObject result = new JSONObject();
+        result.put("code", 1);
+        result.put("message", "成功");
+        return result;
+    }
 }

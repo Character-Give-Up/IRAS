@@ -20,4 +20,10 @@ public class MySQLPostDataAccess implements PostDataAccess {
         }
         template.update("INSERT INTO post(post_name) VALUES(?)", name);
     }
+
+    @Override
+    public void removePost(String name) {
+        JdbcTemplate template = getJdbcTemplate();
+        template.update("delete from post as p where p.post_name=?", name);
+    }
 }
