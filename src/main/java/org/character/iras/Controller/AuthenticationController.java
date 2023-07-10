@@ -7,16 +7,15 @@ import org.character.iras.DataAccess.Interfaces.TokenDataAccess;
 import org.character.iras.DataAccess.Interfaces.UserDataAccess;
 import org.character.iras.DataAccess.MySQLImplments.MySQLTokenDataAccess;
 import org.character.iras.DataAccess.MySQLImplments.MySQLUserDataAccess;
+import org.character.iras.Entity.Token;
+import org.character.iras.Entity.User;
 import org.character.iras.Exceptions.UserNotFoundException;
 import org.character.iras.Service.AuthenticationService;
 import org.character.iras.Utils.TokenGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
 
@@ -116,11 +115,7 @@ public class AuthenticationController {
             this.tokenGenerator.setDigit(64);
             String token = this.tokenGenerator.generate();
             result.put("token", token);
-            tokenDataAccess.addToken(token);
-            userDataAccess.setUserLastLoginTime(username, Calendar.getInstance().getTime());
-            userDataAccess.setUserLastToken(username, token);
-            Cookie cookie = new Cookie("token", token);
-            response.addCookie(cookie);
+            LoginUser(response, username, token);
         }else {
             // 如果验证失败，则返回0，并告知前端账号或密码错误
             logger.info("核验用户" + username + "失败！");
@@ -144,11 +139,42 @@ public class AuthenticationController {
             userDataAccess.addUser(username, password, email);
             result.put("code", 1);
             result.put("message", "注册成功");
+            String token = tokenGenerator.generate();
+            LoginUser(response, username, token);
         }else{
             result.put("code", -1);
             result.put("message", "用户" + info.getString("username") + "已存在");
         }
         return result;
+    }
+
+    /**
+     * 让一个用户登录
+     * @param response 响应体
+     * @param username 用户名
+     * @param token 登陆令牌
+     */
+    private void LoginUser(HttpServletResponse response, String username, String token) {
+        tokenDataAccess.addToken(token);
+        userDataAccess.setUserLastLoginTime(username, Calendar.getInstance().getTime());
+        userDataAccess.setUserLastToken(username, token);
+        Cookie cookie = new Cookie("token", token);
+        Cookie cookie1 = new Cookie("username", username);
+        response.addCookie(cookie);
+        response.addCookie(cookie1);
+    }
+
+    @GetMapping("/isPrivileged")
+    public JSONObject isPrivileged(@RequestParam String username){
+        JSONObject res = new JSONObject(true);
+        User user = userDataAccess.getUserByUsername(username);
+        res.put("code", user == null ? -1 : 1);
+        if (user == null) {
+            res.put("message", "用户不存在");
+            return res;
+        }
+        res.put("privileged", user.isPrivileged());
+        return res;
     }
 
 //    @PostMapping("/register")

@@ -41,60 +41,66 @@ public class Application {
 
 
     public static void main(String[] args) throws Exception {
-        for (Map.Entry<String, String> stringStringEntry : new SystemInformationGetter().getInformation().entrySet()) {
-            System.out.println(stringStringEntry.getKey() + stringStringEntry.getValue());
-        }
-        run = SpringApplication.run(Application.class, args);
-        template = run.getBean(JdbcTemplate.class);
-        context = new ClassPathXmlApplicationContext("beans.xml");
-        commandManager = run.getBean("CommandManager", CommandManager.class);
-        File path = new File(ResourceUtils.getURL("classpath:").getPath());
-        if(!path.exists()) path = new File("");
-        AbsolutePath = path.getAbsolutePath();
-
-        commandManager.registerCommand("stop", new StopCommandHandler());
-
-        logger = LoggerFactory.getLogger(Application.class);
-
-        Terminal terminal = TerminalBuilder.builder().system(true).build();
-        History history = new DefaultHistory();
-        LineReader lineReader = LineReaderBuilder.builder()
-                .terminal(terminal)
-                .history(history)
-                .build();
-
-        if (run.getBean(MySQLInitializer.class).initialize()) {
-            System.out.println("欢迎使用智能简历解析系统");
-            System.out.println("此系统目前处于初始化状态，需要您指定初始管理员账号的用户名和密码！");
-            String username = "";
-            while (username.length() < 3){
-                username = lineReader.readLine(" => 请在右侧输入用户名：");
+        try {
+            for (Map.Entry<String, String> stringStringEntry : new SystemInformationGetter().getInformation().entrySet()) {
+                System.out.println(stringStringEntry.getKey() + stringStringEntry.getValue());
             }
-            String password = "";
-            while (password.length() < 6){
-                password = lineReader.readLine(" => 请在右侧输入密码：");
-            }
-            template.execute("INSERT INTO user(`username`, `password`, `privileged`) VALUE('" + username + "', '" + password + "', 1)");
-            System.out.println("初始化成功！");
-        }
+            run = SpringApplication.run(Application.class, args);
+            template = run.getBean(JdbcTemplate.class);
+            context = new ClassPathXmlApplicationContext("beans.xml");
+            commandManager = run.getBean("CommandManager", CommandManager.class);
+            File path = new File(ResourceUtils.getURL("classpath:").getPath());
+            if(!path.exists()) path = new File("");
+            AbsolutePath = path.getAbsolutePath();
 
+            commandManager.registerCommand("stop", new StopCommandHandler());
 
+            logger = LoggerFactory.getLogger(Application.class);
 
-        while (true){
+            Terminal terminal = TerminalBuilder.builder().system(true).build();
+            History history = new DefaultHistory();
+            LineReader lineReader = LineReaderBuilder.builder()
+                    .terminal(terminal)
+                    .history(history)
+                    .build();
 
-            String line = lineReader.readLine("> ");
-
-            if(line.length() != 0){
-                try{
-                    commandManager.handle(line);
-                    logger.info("控制台执行了命令：" + line);
-                }catch (CommandNotFoundException e){
-                    logger.info("控制台执行了命令：" + line);
-                    logger.warn(e.getMessage());
+            if (run.getBean(MySQLInitializer.class).initialize()) {
+                System.out.println("欢迎使用智能简历解析系统");
+                System.out.println("此系统目前处于初始化状态，需要您指定初始管理员账号的用户名和密码！");
+                String username = "";
+                while (username.length() < 3){
+                    username = lineReader.readLine(" => 请在右侧输入用户名：");
                 }
+                String password = "";
+                while (password.length() < 6){
+                    password = lineReader.readLine(" => 请在右侧输入密码：");
+                }
+                template.execute("INSERT INTO user(`username`, `password`, `privileged`) VALUE('" + username + "', '" + password + "', 1)");
+                System.out.println("初始化成功！");
             }
-            history.add(line);
+
+
+
+            while (true){
+
+                String line = lineReader.readLine("> ");
+
+                if(line.length() != 0){
+                    try{
+                        commandManager.handle(line);
+                        logger.info("控制台执行了命令：" + line);
+                    }catch (CommandNotFoundException e){
+                        logger.info("控制台执行了命令：" + line);
+                        logger.warn(e.getMessage());
+                    }
+                }
+                history.add(line);
+            }
+        }catch (Exception e){
+            getLogger().error("运行遇到错误：" + e.getClass().getName() +
+                    "\n错误内容：" + e.getMessage());
         }
+
 
 
     }

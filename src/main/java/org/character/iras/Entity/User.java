@@ -137,4 +137,8 @@ public class User {
                 ", resumeId=" + resumeId +
                 '}';
     }
+
+    public boolean isPrivileged() {
+        return privileged;
+    }
 }

@@ -98,4 +98,5 @@ public class MySQLUserDataAccess implements UserDataAccess {
         template.update("insert into user (username, password, email) values (?, ?, ?);",
                 username, password, email);
     }
+
 }

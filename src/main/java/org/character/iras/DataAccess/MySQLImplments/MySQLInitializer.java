@@ -33,7 +33,10 @@ public class MySQLInitializer implements DataAccess {
                         "\t`GraduateSchool` VARCHAR ( 255 ) COLLATE utf8mb4_general_ci DEFAULT NULL,\n" +
                         "\t`WorkingSeniority` VARCHAR ( 255 ) COLLATE utf8mb4_general_ci DEFAULT NULL,\n" +
                         "PRIMARY KEY ( `id` ) \n" +
-                        ") ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;"
+                        ") ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;",
+                "CREATE TABLE if not exists `post` (\n" +
+                        "  `post_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL\n" +
+                        ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
         };
 
         for (String s : sql) {
