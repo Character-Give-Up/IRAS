@@ -1,6 +1,7 @@
 package org.character.iras.CloudAIAccess;
 import com.alibaba.fastjson.JSONObject;
 import org.character.iras.Entity.Resume;
+import org.springframework.stereotype.Component;
 
 
 import java.io.*;
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.io.IOException;
 
 
+@Component
 public class ResumeAnalyzerImpl implements ResumeAnalyzer{
 
     private Resume pdfText;

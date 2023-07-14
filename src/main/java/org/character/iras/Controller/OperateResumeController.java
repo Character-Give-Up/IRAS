@@ -1,29 +1,44 @@
 package org.character.iras.Controller;
 
 import com.alibaba.fastjson.JSONObject;
+import org.character.iras.CloudAIAccess.ResumeAnalyzer;
+import org.character.iras.CloudAIAccess.ResumeAnalyzerImpl;
+import org.character.iras.Entity.PDFResolver;
 import org.character.iras.Entity.Resume;
 import org.character.iras.Service.EditResumeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 
 /**
  * 手动录入简历控制器
  */
 @RestController
-public class SubmitResumeController {
+public class OperateResumeController {
 
     private EditResumeService editResumeService;
+    private ResumeAnalyzer resumeAnalyzer;
+    private PDFResolver pdfResolver;
 
     @Autowired
     private void setEditResumeService(EditResumeService service){
         this.editResumeService = service;
     }
 
+    @Autowired
+    private void setResumeAnalyzer(ResumeAnalyzerImpl analyzer){
+        this.resumeAnalyzer = analyzer;
+    }
+
+    @Autowired
+    private void setPdfResolver(PDFResolver resolver){
+        this.pdfResolver = resolver;
+    }
 
     /**
      * 手动录入简历信息
@@ -58,6 +73,15 @@ public class SubmitResumeController {
         result.put("message", "成功");
 
         return result;
+    }
+
+    @GetMapping("/analyze")
+    public JSONObject analyze(@RequestBody JSONObject info) throws IOException {
+
+        Resume resume = new Resume();
+        resume.setOriginalContent(pdfResolver.resolve(info.getString("url")));
+        this.resumeAnalyzer.setResume(resume);
+        return resumeAnalyzer.getKeyInfo();
     }
 
 

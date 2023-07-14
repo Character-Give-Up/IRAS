@@ -36,7 +36,7 @@ public class Application {
     public static JdbcTemplate template;
     public static String AbsolutePath;
     public static ConfigurableApplicationContext run;
-    private static Logger logger;
+    private static Logger logger = LoggerFactory.getLogger(Application.class);
     private static CommandManager commandManager;
 
 
