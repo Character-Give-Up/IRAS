@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.print.attribute.standard.PrinterResolution;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,7 +40,15 @@ public class EditPostController {
     }
 
     @GetMapping("/getPosts")
-    public List<String> getPosts(){
-        return postService.getPosts();
+    public List<JSONObject> getPosts(){
+        List<String> posts = postService.getPosts();
+        List<JSONObject> res = new ArrayList<>();
+        for (String post : posts) {
+            JSONObject jsonObject = new JSONObject(true);
+            jsonObject.put("value", post);
+            jsonObject.put("label", post);
+            res.add(jsonObject);
+        }
+        return res;
     }
 }
