@@ -42,6 +42,15 @@ public class Resume {
      * 原始内容
      */
     private String originalContent;
+    private String post;
+
+    public String getPost() {
+        return post;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
+    }
 
     /**
      * 创建简历实体

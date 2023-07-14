@@ -21,12 +21,13 @@ public class MySQLResumeDataAccess implements ResumeDataAccess {
     @Override
     public void putNewResumeData(int id, Resume resume){
         JdbcTemplate template = getJdbcTemplate();
-        template.update("INSERT INTO resume(id, `name`, age, HighestDegree, GraduateSchool, WorkingSeniority)" +
-                " VALUES(?, ?, ?, ?, ?, ?)",
+        template.update("INSERT INTO resume(id, `name`, age, HighestDegree, GraduateSchool, WorkingSeniority, post)" +
+                " VALUES(?, ?, ?, ?, ?, ?, ?)",
                 id, resume.getName(), resume.getAge(),
                 resume.getHighestDegree(),
                 resume.getGraduateSchool(),
-                resume.getWorkingSeniority());
+                resume.getWorkingSeniority(),
+                resume.getPost());
     }
     @Override
     public List<Integer> getIds() {

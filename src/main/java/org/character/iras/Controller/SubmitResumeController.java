@@ -40,6 +40,7 @@ public class SubmitResumeController {
         String graduateSchool = info.getString("GraduateSchool"); // 设置投递简历的毕业院校
         String highestDegree = info.getString("HighestDegree"); //设置投递简历的最高学历
         String workingSeniority = info.getString("WorkingSeniority"); // 设置投递简历的工作年限
+        String post = info.getString("post");
 
         Resume resume = new Resume();
         resume.setName(name); // 设置简历所有者的姓名
@@ -48,6 +49,7 @@ public class SubmitResumeController {
         resume.setHighestDegree(highestDegree); // 设置简历所有者的最高学历
         resume.setWorkingSeniority(workingSeniority); // 设置简历所有者的工作年限
         resume.setOriginalContent(null); // 手动录入，无原始内容，因此设置为null
+        resume.setPost(post);
 
         editResumeService.addNewResumeData(username, resume);
 

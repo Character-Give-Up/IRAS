@@ -28,6 +28,7 @@ public class ResumeMapper implements RowMapper<Resume> {
         String highestDegree = rs.getString("HighestDegree");
         String graduateSchool = rs.getString("GraduateSchool");
         String workingSeniority = rs.getString("WorkingSeniority");
+        String post = rs.getString("post");
         Resume resume = new Resume(id, url);
         if(keywords != null){
             String[] split = keywords.split(", ");
@@ -41,6 +42,7 @@ public class ResumeMapper implements RowMapper<Resume> {
         resume.setHighestDegree(highestDegree);
         resume.setGraduateSchool(graduateSchool);
         resume.setWorkingSeniority(workingSeniority);
+        resume.setPost(post);
 
         return resume;
     }

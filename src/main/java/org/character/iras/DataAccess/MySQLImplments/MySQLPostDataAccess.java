@@ -31,7 +31,7 @@ public class MySQLPostDataAccess implements PostDataAccess {
     @Override
     public List<String> getPosts() {
         JdbcTemplate template = getJdbcTemplate();
-        List<Map<String, Object>> maps = template.queryForList("select * from posts");
+        List<Map<String, Object>> maps = template.queryForList("select * from post");
         List<String> result = new ArrayList<>();
         for (Map<String, Object> map : maps) {
             Object postName = map.get("post_name");
