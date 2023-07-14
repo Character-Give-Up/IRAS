@@ -2,6 +2,7 @@ package org.character.iras.Controller;
 
 import com.alibaba.fastjson.JSONObject;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.character.iras.DataAccess.Interfaces.TokenDataAccess;
 import org.character.iras.DataAccess.Interfaces.UserDataAccess;
@@ -165,27 +166,33 @@ public class AuthenticationController {
     }
 
     @GetMapping("/isPrivileged")
-    public JSONObject isPrivileged(@RequestParam String username){
-        JSONObject res = new JSONObject(true);
-        User user = userDataAccess.getUserByUsername(username);
-        res.put("code", user == null ? -1 : 1);
-        if (user == null) {
-            res.put("message", "用户不存在");
-            return res;
+    public JSONObject isPrivileged(HttpServletRequest request){
+        JSONObject res = new JSONObject();
+        Cookie cookie = getCookie(request.getCookies(), "token");
+        if(cookie == null){
+            res.put("code", -1);
+            res.put("message", "没有令牌");
+        }else {
+            String token = cookie.getValue();
+            User user = userDataAccess.findUserByLastLoginToken(token);
+            if(user == null){
+                res.put("code", 0);
+                res.put("message", "令牌无效");
+            }else {
+                res.put("code", 1);
+                res.put("privileged", user.isPrivileged());
+            }
         }
-        res.put("privileged", user.isPrivileged());
         return res;
     }
 
-//    @PostMapping("/register")
-//    public JSONObject register(@RequestParam String username,
-//                               @RequestParam String password,
-//                               @RequestParam String email,
-//                               HttpServletResponse response){
-//        JSONObject info = new JSONObject();
-//        info.put("username", username);
-//        info.put("password", password);
-//        info.put("email", email);
-//        return register(info, response);
-//    }
+
+    private Cookie getCookie(Cookie[] cookies, String name){
+        for (Cookie cookie : cookies) {
+            if(cookie.getName().equals(name)) return cookie;
+        }
+        return null;
+    }
+
+
 }

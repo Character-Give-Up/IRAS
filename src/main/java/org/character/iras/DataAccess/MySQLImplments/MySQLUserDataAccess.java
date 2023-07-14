@@ -81,6 +81,12 @@ public class MySQLUserDataAccess implements UserDataAccess {
     }
 
     @Override
+    public User findUserByLastLoginToken(String token){
+        JdbcTemplate template = getJdbcTemplate();
+        return template.queryForObject("select * from user where last_token=?", new UserMapper(), token);
+    }
+
+    @Override
     public List<User> getUsers(){
         JdbcTemplate template = getJdbcTemplate();
         return template.query("SELECT * FROM user", new UserMapper());

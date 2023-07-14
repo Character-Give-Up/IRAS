@@ -62,6 +62,8 @@ public interface UserDataAccess extends DataAccess{
      */
     void setUserLastToken(String username, String token);
 
+    User findUserByLastLoginToken(String token);
+
     List<User> getUsers();
 
     void setUserResumeId(String username, int id);
